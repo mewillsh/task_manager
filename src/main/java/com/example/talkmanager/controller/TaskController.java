@@ -2,6 +2,7 @@ package com.example.talkmanager.controller;
 
 import com.example.talkmanager.dto.request.RequestStatus;
 import com.example.talkmanager.dto.request.RequestTask;
+import com.example.talkmanager.dto.request.UpdateTaskRequest;
 import com.example.talkmanager.dto.response.ResponseTask;
 import com.example.talkmanager.entity.Task;
 import com.example.talkmanager.service.TaskService;
@@ -34,7 +35,7 @@ public class TaskController {
         return ResponseEntity.status(200).body(currTask);
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<ResponseTask> updateTask(@Valid @RequestBody RequestTask requestTask,@PathVariable Long id){
+    public ResponseEntity<ResponseTask> updateTask(@Valid @RequestBody UpdateTaskRequest requestTask,@PathVariable Long id){
         ResponseTask task=taskService.updateTask(id,requestTask);
         return ResponseEntity.status(200).body(task);
     }

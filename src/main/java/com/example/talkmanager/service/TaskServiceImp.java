@@ -2,6 +2,7 @@ package com.example.talkmanager.service;
 
 import com.example.talkmanager.dto.request.RequestStatus;
 import com.example.talkmanager.dto.request.RequestTask;
+import com.example.talkmanager.dto.request.UpdateTaskRequest;
 import com.example.talkmanager.dto.response.ResponseStatus;
 import com.example.talkmanager.dto.response.ResponseTask;
 import com.example.talkmanager.entity.Task;
@@ -27,6 +28,7 @@ public class TaskServiceImp implements TaskService{
     public Task createTask(RequestTask task) {
         logger.info("Creating new task with title {}",task.getTitle());
         Task newTask=new Task(task.getTitle(),task.getDescription(),task.getStatus(),task.getPriority());
+        newTask.setDue_date(task.getDue_date());
         taskRepository.save(newTask);
         logger.debug("Created new task with ID: {}",newTask.getId());
         return newTask;
@@ -47,7 +49,7 @@ public class TaskServiceImp implements TaskService{
     }
 
     @Override
-    public ResponseTask updateTask(Long id, RequestTask req) {
+    public ResponseTask updateTask(Long id, UpdateTaskRequest req) {
         Task task=taskRepository.findById(id).orElseThrow(()->{
             logger.error("Didn't Found Task with this ID: {}",id);
             return new TaskNotFoundException("Task not Found");});
@@ -62,6 +64,9 @@ public class TaskServiceImp implements TaskService{
         }
         if(req.getStatus()!=null){
             task.setStatus(req.getStatus());
+        }
+        if(req.getDue_date()!=null){
+            task.setDue_date(req.getDue_date());
         }
         taskRepository.save(task);
         logger.debug("Updated Task with ID: {}",id);

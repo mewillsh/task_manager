@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public enum Status {
     COMPLETED,
     PENDING,
-    IN_PROCESS;
+    IN_PROGRESS;
     @JsonCreator
     public static Status form(String val){
         try{
